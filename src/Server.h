@@ -8,8 +8,6 @@ public:
 
     void listen();
 
-    void OnRequest(Petition* req);
-
 private:
     int m_port;
     Socket* m_socket;

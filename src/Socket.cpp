@@ -47,6 +47,7 @@ void Socket::Listen(void(*func)(Petition*)) {
         if(request == nullptr) {
             Logger::PrintMessage("Something went wrong... Revise");
         } else {
+            request->setData();
             func(request);
         }
     }

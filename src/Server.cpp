@@ -17,10 +17,7 @@ Server::~Server() {
 void Server::listen() {
 
     auto OnRequest = [](Petition* req) {
-        std::string data = req->getBufferString();
-        Logger::PrintMessage(data);
-        RequestParser parser(data);
-        PetitionData parsedRequest = parser.Parse();
+        req->PrintPetition();
     };  
 
     // TODO make port number dynamic
@@ -28,8 +25,4 @@ void Server::listen() {
     for(;;) {
         m_socket->Listen(OnRequest);
     }
-}
-
-void Server::OnRequest(Petition* request) {
-    Logger::PrintMessage("Callback Trigered");
 }

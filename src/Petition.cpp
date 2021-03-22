@@ -46,3 +46,17 @@ std::string Petition::getBufferString() {
     }
     return m_buffer->GetString();
 }
+
+void Petition::setData() {
+    RequestParser parser(getBufferString());
+    m_data = parser.Parse();
+}
+
+void Petition::PrintPetition() {
+    std::string msg = "";
+    msg += m_data.getMethod();
+    msg += " ";
+    msg += m_data.getPath();
+    Logger::PrintMessage(msg);
+
+}

@@ -1,5 +1,5 @@
 #pragma once
-#include <unordered_map>
+#include <map>
 #include <string>
 
 class PetitionData{
@@ -11,18 +11,24 @@ public:
         GET,
         POST,
         PUT,
+        ERR,
     };
 
-    void setMethod(Method method);
+    void setMethod(const std::string& method);
     void setPath(const std::string& path);
     void setProtocol(const std::string& protocol);
-    void setHeaders(const std::unordered_map<std::string,std::string>& headers);
+    void setHeader(std::string name, std::string value);
     void setBody(const std::string& body);
+
+    std::string getMethod() const;
+    std::string getPath() const;
+    std::map<std::string, std::string> getHeader() const;
 
 private:
     Method m_method;
+    std::string m_sMethod;
     std::string m_path;
     std::string m_protocol;
-    std::unordered_map<std::string, std::string> m_headers; // TODO replace this with your own
+    std::map<std::string, std::string> m_headers; // TODO replace this with your own
     std::string m_body;
 };
