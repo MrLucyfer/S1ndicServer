@@ -4,6 +4,7 @@
 class DataBuffer {
 public:
     DataBuffer();
+    DataBuffer(char* data, int length);
     ~DataBuffer();
 
     void SetSize(const int& data);
@@ -11,6 +12,8 @@ public:
     char* GetData();
     int GetSize();
     std::string GetString();
+
+    int GetStringSize();
 
     void MakeString();
 

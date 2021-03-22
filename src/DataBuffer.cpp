@@ -5,6 +5,12 @@ DataBuffer::DataBuffer() {
     m_buffer.resize(m_size);
 }
 
+DataBuffer::DataBuffer(char* data, int length) {
+    m_buffer = std::vector<char>(data, data + length);
+    m_size = length;
+}
+
+
 DataBuffer::~DataBuffer() {
 
 }
@@ -26,5 +32,9 @@ std::string DataBuffer::GetString() {
 }
 
 void DataBuffer::MakeString() {
-    m_bufferString = std::string(GetData());
+    m_bufferString = std::string(m_buffer.data());
+}
+
+int DataBuffer::GetStringSize() {
+    return m_bufferString.size();
 }

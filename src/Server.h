@@ -1,4 +1,5 @@
 #include "Socket.h"
+#include "Petition.h"
 
 class Server {
 public:
@@ -6,6 +7,8 @@ public:
     ~Server();
 
     void listen();
+
+    void OnRequest(Petition* req);
 
 private:
     int m_port;

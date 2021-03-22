@@ -1,5 +1,7 @@
+#pragma once
 #include <netinet/in.h>
 #include <netinet/ip.h> 
+#include "Petition.h"
 
 class Socket {
 public:
@@ -7,10 +9,10 @@ public:
     ~Socket();
 
     void Bind();
-    void Listen();
+    void Listen(void(*func)(Petition*));
 
 private:
-    void Accept();
+    Petition* Accept();
 
 private:
     int m_port;

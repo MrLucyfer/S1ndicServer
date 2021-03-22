@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include "Socket.h"
 #include "Logger.cpp"
-#include "DataBuffer.h"
+#include "Petition.h"
 
 #define MAX_CONNECTIONS 3
 
@@ -37,18 +37,22 @@ void Socket::Bind() {
     }
 }
 
-void Socket::Listen() {
+void Socket::Listen(void(*func)(Petition*)) {
     int status = listen(m_socketFd, MAX_CONNECTIONS);
 
     if(status == -1) {
         Logger::PrintError("Error while listening.\n");
     } else {
-        Logger::PrintMessage("Server listening...");
-        Accept();
+        Petition* request = Accept();
+        if(request == nullptr) {
+            Logger::PrintMessage("Something went wrong... Revise");
+        } else {
+            func(request);
+        }
     }
 }
 
-void Socket::Accept() {
+Petition* Socket::Accept() {
     struct sockaddr_in incoming;
     unsigned int length = sizeof(incoming);
     int fd = accept(m_socketFd, (struct sockaddr*) &incoming, &length);
@@ -58,8 +62,10 @@ void Socket::Accept() {
         Logger::PrintAddress(incoming);
         DataBuffer* buffer = new DataBuffer();
         int size = recv(fd, buffer->GetData(), buffer->GetSize(), 0);
-        buffer->MakeString();
-        string message = buffer->GetString();
-        Logger::PrintMessage(message);
+
+        Petition* request = new Petition(ntohl(incoming.sin_addr.s_addr), ntohs(incoming.sin_port), buffer);
+        return request;
     }    
+
+    return nullptr;
 }
