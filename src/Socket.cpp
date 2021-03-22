@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include "Socket.h"
 #include "Logger.cpp"
+#include "DataBuffer.h"
 
 #define MAX_CONNECTIONS 3
 
@@ -51,6 +52,14 @@ void Socket::Accept() {
     struct sockaddr_in incoming;
     unsigned int length = sizeof(incoming);
     int fd = accept(m_socketFd, (struct sockaddr*) &incoming, &length);
-    Logger::PrintAddres(incoming);
-
+    if(fd == -1) {
+        Logger::PrintError("Error accepting the request.\n");
+    } else {
+        Logger::PrintAddress(incoming);
+        DataBuffer* buffer = new DataBuffer();
+        int size = recv(fd, buffer->GetData(), buffer->GetSize(), 0);
+        buffer->MakeString();
+        string message = buffer->GetString();
+        Logger::PrintMessage(message);
+    }    
 }
