@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include "PetitionData.h"
 
@@ -8,6 +9,15 @@ public:
 
     PetitionData Parse();
 private:
+    enum Phases {
+        Method,
+        Path,
+        Protocol,
+        Header,
+    };
+
+    std::string NextLine();
+    //void AppendHeader(const std::string& line);
     
 private:
     std::string m_rawData;
