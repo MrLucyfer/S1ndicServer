@@ -1,4 +1,6 @@
 #include "Petition.h"
+#include <fstream>
+#include <iostream>
 
 Petition::Petition() {
     m_buffer = nullptr;
@@ -60,3 +62,38 @@ void Petition::PrintPetition() {
     Logger::PrintMessage(msg);
 
 }
+
+void Petition::Deserialize() {
+    setData();
+}
+
+void Petition::Serialize() {
+    std::string body;
+    std::string line;
+    std::ifstream file("assets/index.html");
+
+    if(file.is_open()) {
+        while(getline(file, line)) {
+            body += line;
+            body += "\n";
+        }
+        file.close();
+    }
+    unsigned int bodyLength = body.length();
+
+    std::string response = "";
+    response += "HTTP/1.1 200 OK\r\n";
+    response += "Server: SindicServer\r\n";
+    response += "Content-Length: ";
+    response += std::to_string(bodyLength);
+    response += "\r\n";
+    response += "Connection: Close\r\n";
+    response += "\r\n";
+    response += body;
+
+    Logger::PrintMessage(response);
+
+    m_buffer->SetString(response);
+}
+
+

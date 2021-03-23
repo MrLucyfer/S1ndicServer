@@ -22,6 +22,18 @@ void PetitionData::setMethod(const std::string& method) {
     }
 }
 
+void PetitionData::setsMethod(Method method) {
+    if(method == Method::GET) {
+        m_sMethod = "GET";
+    } else if(method == Method::POST) {
+        m_sMethod = "POST";
+    } else if(method == Method::PUT) {
+        m_sMethod = "PUT";
+    } else {
+        m_sMethod = "GET";
+    }
+}
+
 void PetitionData::setPath(const std::string& path) {
     m_path = path;
 }
@@ -49,3 +61,4 @@ std::string PetitionData::getPath() const {
 std::map<std::string, std::string> PetitionData::getHeader() const {
     return m_headers;
 }
+

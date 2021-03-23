@@ -8,6 +8,7 @@ public:
     ~DataBuffer();
 
     void SetSize(const int& data);
+    void SetString(const std::string& body);
 
     char* GetData();
     int GetSize();

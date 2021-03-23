@@ -15,6 +15,7 @@ public:
     };
 
     void setMethod(const std::string& method);
+    void setsMethod(Method method);
     void setPath(const std::string& path);
     void setProtocol(const std::string& protocol);
     void setHeader(std::string name, std::string value);
@@ -22,7 +23,9 @@ public:
 
     std::string getMethod() const;
     std::string getPath() const;
+    std::string getProtocol() const;
     std::map<std::string, std::string> getHeader() const;
+    std::string getBody() const;
 
 private:
     Method m_method;

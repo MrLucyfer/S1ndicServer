@@ -20,8 +20,10 @@ public:
     unsigned int getIp() const;
     int getPort() const;
     DataBuffer* getData() const;
-
     std::string getBufferString();
+
+    void Serialize();
+    void Deserialize();
 
     void PrintPetition();
 

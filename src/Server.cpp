@@ -4,6 +4,7 @@
 #include "PetitionData.h"
 #include <string>
 
+
 Server::Server(int port) {
     m_port = port;
     m_socket = new Socket(m_port);
@@ -16,8 +17,11 @@ Server::~Server() {
 
 void Server::listen() {
 
-    auto OnRequest = [](Petition* req) {
+    auto OnRequest = [&](Petition* req, const int& descriptor) {
         req->PrintPetition();
+        Petition* response = new Petition(req->getIp(), req->getPort());
+        response->Serialize();
+        m_socket->Send(response, descriptor);
     };  
 
     // TODO make port number dynamic

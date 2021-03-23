@@ -38,3 +38,10 @@ void DataBuffer::MakeString() {
 int DataBuffer::GetStringSize() {
     return m_bufferString.size();
 }
+
+void DataBuffer::SetString(const std::string &body) {
+    m_bufferString = body;
+    m_buffer = std::vector<char>(m_bufferString.c_str(),
+                                 m_bufferString.c_str() + m_bufferString.length());
+    m_size = m_bufferString.length();
+}

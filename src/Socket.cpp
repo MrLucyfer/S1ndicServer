@@ -37,26 +37,27 @@ void Socket::Bind() {
     }
 }
 
-void Socket::Listen(void(*func)(Petition*)) {
+void Socket::Listen(const std::function<void(Petition*, const int&)>& func) {
     int status = listen(m_socketFd, MAX_CONNECTIONS);
 
     if(status == -1) {
         Logger::PrintError("Error while listening.\n");
     } else {
-        Petition* request = Accept();
+        int descriptor;
+        Petition* request = Accept(descriptor);
         if(request == nullptr) {
             Logger::PrintMessage("Something went wrong... Revise");
         } else {
             request->setData();
-            func(request);
+            func(request, descriptor);
         }
     }
 }
 
-Petition* Socket::Accept() {
+Petition* Socket::Accept(int& fd) {
     struct sockaddr_in incoming;
     unsigned int length = sizeof(incoming);
-    int fd = accept(m_socketFd, (struct sockaddr*) &incoming, &length);
+    fd = accept(m_socketFd, (struct sockaddr*) &incoming, &length);
     if(fd == -1) {
         Logger::PrintError("Error accepting the request.\n");
     } else {
@@ -70,3 +71,12 @@ Petition* Socket::Accept() {
 
     return nullptr;
 }
+
+void Socket::Send(Petition *response, const int &descriptor) {
+    DataBuffer* body = response->getData();
+    int size = send(descriptor, body->GetData(), body->GetSize(), 0);
+
+}
+
+
+
