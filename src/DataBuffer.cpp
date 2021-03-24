@@ -23,6 +23,16 @@ char* DataBuffer::GetData() {
     return m_buffer.data();
 }
 
+void DataBuffer::SetData(const char* data, int length) {
+    m_buffer = std::vector<char>(data, data + length);
+    m_size = length;
+}
+
+const char* DataBuffer::GetData(unsigned int& length) {
+    length = m_bufferString.size();
+    return m_bufferString.data();
+}
+
 int DataBuffer::GetSize() {
     return m_buffer.size();
 }
@@ -39,9 +49,3 @@ int DataBuffer::GetStringSize() {
     return m_bufferString.size();
 }
 
-void DataBuffer::SetString(const std::string &body) {
-    m_bufferString = body;
-    m_buffer = std::vector<char>(m_bufferString.c_str(),
-                                 m_bufferString.c_str() + m_bufferString.length());
-    m_size = m_bufferString.length();
-}

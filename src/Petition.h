@@ -22,7 +22,7 @@ public:
     DataBuffer* getData() const;
     std::string getBufferString();
 
-    void Serialize();
+    std::string Serialize();
     void Deserialize();
 
     void PrintPetition();

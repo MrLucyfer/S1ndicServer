@@ -67,7 +67,7 @@ void Petition::Deserialize() {
     setData();
 }
 
-void Petition::Serialize() {
+std::string Petition::Serialize() {
     std::string body;
     std::string line;
     std::ifstream file("assets/index.html");
@@ -93,7 +93,8 @@ void Petition::Serialize() {
 
     Logger::PrintMessage(response);
 
-    m_buffer->SetString(response);
+    return response;
+    //m_buffer->SetData(response.data(), response.length());
 }
 
 

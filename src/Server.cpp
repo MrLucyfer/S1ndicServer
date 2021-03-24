@@ -20,8 +20,8 @@ void Server::listen() {
     auto OnRequest = [&](Petition* req, const int& descriptor) {
         req->PrintPetition();
         Petition* response = new Petition(req->getIp(), req->getPort());
-        response->Serialize();
-        m_socket->Send(response, descriptor);
+        std::string body = response->Serialize();
+        m_socket->Send(body, descriptor);
     };  
 
     // TODO make port number dynamic

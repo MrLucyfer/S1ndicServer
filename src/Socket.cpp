@@ -72,9 +72,9 @@ Petition* Socket::Accept(int& fd) {
     return nullptr;
 }
 
-void Socket::Send(Petition *response, const int &descriptor) {
-    DataBuffer* body = response->getData();
-    int size = send(descriptor, body->GetData(), body->GetSize(), 0);
+void Socket::Send(std::string response, const int &descriptor) {
+    unsigned int length = response.length();
+    int size = send(descriptor, response.c_str(), length, 0);
 
 }
 

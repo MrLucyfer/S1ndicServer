@@ -12,7 +12,7 @@ public:
 
     void Bind();
     void Listen(const std::function<void(Petition*, const int&)>& func);
-    void Send(Petition* response, const int& descriptor);
+    void Send(std::string response, const int& descriptor);
 
 private:
     Petition* Accept(int& fd);
