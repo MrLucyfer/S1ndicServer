@@ -1,5 +1,6 @@
 #include "Socket.h"
 #include "Petition.h"
+#include "Path.h"
 
 class Server {
 public:
@@ -11,4 +12,5 @@ public:
 private:
     int m_port;
     Socket* m_socket;
+    Path* m_path;
 };

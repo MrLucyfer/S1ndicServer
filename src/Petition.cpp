@@ -70,7 +70,7 @@ void Petition::Deserialize() {
 std::string Petition::Serialize() {
     std::string body;
     std::string line;
-    std::ifstream file("assets/index.html");
+    std::ifstream file("public_html/index.html");
 
     if(file.is_open()) {
         while(getline(file, line)) {
