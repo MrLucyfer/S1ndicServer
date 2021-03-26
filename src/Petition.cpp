@@ -1,4 +1,5 @@
 #include "Petition.h"
+#include "Path.h"
 #include <fstream>
 #include <iostream>
 
@@ -23,12 +24,6 @@ Petition::Petition(const int& ip, const int& port, DataBuffer* data) {
     m_port = port;
     m_buffer = data;
 }
-
-// Petition::Petition(const struct sockaddr_in& sender, DataBuffer* data) {
-//     m_ipString = inet_ntoa(sender.sin_addr);
-//     m_ip = ntohl(sender.sin_addr.s_addr);
-//     m_po
-// }
 
 unsigned int Petition::getIp() const {
     return m_ip;
@@ -68,18 +63,15 @@ void Petition::Deserialize() {
 }
 
 std::string Petition::Serialize() {
-    std::string body;
+    //std::string body;
     std::string line;
     std::ifstream file("public_html/index.html");
+    auto path = m_data.getPath();
 
-    if(file.is_open()) {
-        while(getline(file, line)) {
-            body += line;
-            body += "\n";
-        }
-        file.close();
-    }
-    unsigned int bodyLength = body.length();
+    //Return a struct
+    int length;
+    char* body = Path::Get().Open(path, length);
+
 
     std::string response = "";
     response += "HTTP/1.1 200 OK\r\n";

@@ -8,14 +8,13 @@ Path::Path() {
     std::filesystem::path temp = std::filesystem::current_path();
     m_rootPath = temp.string();
     m_rootPath += "/public_html";
-    //Logger::PrintMessage(m_rootPath);
 }
 
 Path::~Path() {
 
 }
 
-char* Path::Open(const string& rel_path) {
+char* Path::Open(const string& rel_path, int& length) {
     if(IsDirectory(rel_path)) {
         return nullptr;
     } else {
@@ -26,6 +25,8 @@ char* Path::Open(const string& rel_path) {
         file.seekg(0, ios::beg);
         file.read(&bytes[0], pos);
 
+        length = bytes.size();
+
         return bytes.data();
     }
 }
@@ -33,5 +34,10 @@ char* Path::Open(const string& rel_path) {
 bool Path::IsDirectory(const string& rel_path) {
     std::filesystem::path temp_path(rel_path);
     return std::filesystem::is_directory(temp_path);
+}
+
+Path& Path::Get() {
+    static Path path;
+    return path;
 }
 

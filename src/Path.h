@@ -3,12 +3,11 @@
 
 class Path {
 public:
+    static Path& Get();
+    char* Open(const std::string& rel_path, int& length);
+private:
     Path();
     ~Path();
-
-    char* Open(const std::string& rel_path);
-
-private:
     bool IsDirectory(const std::string& rel_path);
 
 private:
