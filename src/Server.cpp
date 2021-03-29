@@ -19,7 +19,7 @@ void Server::listen() {
 
     auto OnRequest = [&](Petition* req, const int& descriptor) {
         req->PrintPetition();
-        Petition* response = new Petition(req->getIp(), req->getPort());
+        Petition* response = new Petition(req->getIp(), req->getPort(), req->getPath());
         std::string body = response->Serialize();
         m_socket->Send(body, descriptor);
     };  

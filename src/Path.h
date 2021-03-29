@@ -8,6 +8,7 @@ public:
 private:
     Path();
     ~Path();
+    std::string Append(const std::string& rel_path);
     bool IsDirectory(const std::string& rel_path);
 
 private:

@@ -18,7 +18,7 @@ private:
 
     std::string NextLine();
     //void AppendHeader(const std::string& line);
-    
+
 private:
     std::string m_rawData;
     PetitionData m_petition;

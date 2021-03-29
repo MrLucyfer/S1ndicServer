@@ -9,7 +9,7 @@
 class Petition {
 public:
     Petition();
-    Petition(const int& ip, const int& port);
+    Petition(const int& ip, const int& port, const std::string& path);
     Petition(const int& ip, const int& port, char* bufferData, const int& dataLength);
     Petition(const int& ip, const int& port, DataBuffer* bufferData);
     Petition(const struct sockaddr_in& sender, DataBuffer* data);
@@ -21,6 +21,7 @@ public:
     int getPort() const;
     DataBuffer* getData() const;
     std::string getBufferString();
+    std::string getPath();
 
     std::string Serialize();
     void Deserialize();

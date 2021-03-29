@@ -15,10 +15,12 @@ Path::~Path() {
 }
 
 char* Path::Open(const string& rel_path, int& length) {
-    if(IsDirectory(rel_path)) {
+    std::string absolute_path = Append(rel_path);
+    Logger::PrintMessage(absolute_path);
+    if(IsDirectory(absolute_path)) {
         return nullptr;
     } else {
-        std::fstream file(rel_path);
+        std::fstream file(absolute_path);
         std::ifstream::pos_type pos = file.tellg();
         std::vector<char> bytes(pos);
 
@@ -39,5 +41,11 @@ bool Path::IsDirectory(const string& rel_path) {
 Path& Path::Get() {
     static Path path;
     return path;
+}
+
+std::string Path::Append(const std::string& rel_path) {
+    std::string absolute_path = m_rootPath;
+    absolute_path += rel_path;
+    return absolute_path;
 }
 
